@@ -18,7 +18,6 @@ const char* vertexShaderSource = "#version 330 core\n"
 "	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
 "}\0";	//千万别忘记这个\0
 
-
 //片元着色器代码
 const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
