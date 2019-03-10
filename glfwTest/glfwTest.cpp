@@ -73,6 +73,7 @@ int main() {
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
+
 	unsigned int VBO, VAO;
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
