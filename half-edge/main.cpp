@@ -248,10 +248,6 @@ void set_face_normals()
 //	glPopMatrix();
 //}
 
-
-
-
-
 void build_half_edge()
 {
 	set_face_normals();
