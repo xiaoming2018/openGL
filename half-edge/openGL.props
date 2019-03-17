@@ -3,12 +3,12 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>F:\Program\Visual Studio 2017\projects\OpenGL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Program\Visual Studio 2017\projects\OpenGL\lib\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>F:\Program\Visual Studio 2017\projects\glm;F:\Program\Visual Studio 2017\projects\OpenGL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Program\Visual Studio 2017\projects\OpenGL\lib;F:\Program\Visual Studio 2017\projects\OpenGL\lib\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glut.lib;glut32.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />

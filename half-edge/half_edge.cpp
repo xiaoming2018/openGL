@@ -1,6 +1,7 @@
 ﻿#include "half_edge.h"
 #include <set>
 #include <iostream>
+#include <algorithm>
 
 namespace {
 	typedef map<pair<half_edge::half_edge_t::index_t, half_edge::half_edge_t::index_t>, half_edge::half_edge_t::index_t> mapping;
@@ -101,6 +102,57 @@ namespace half_edge {
 			else if (curr_face->ind3 == i) j = curr_face->ind1;
 
 			he.next_he = m_direcdted_edge2he_index[make_pair(i, j)];
+		}
+
+		// Make a map from vertices to boundary halfedges (indices)
+	// originating from them.
+		map< index_t, set< index_t > > vertex2outgoing_boundary_hei;
+		for (vector< index_t >::const_iterator hei = boundary_heis.begin(); \
+			hei != boundary_heis.end(); ++hei)
+		{
+			const index_t originating_vertex = \
+				m_halfedges[m_halfedges[*hei].opposite_he].to_vertex;
+			vertex2outgoing_boundary_hei[originating_vertex].insert(*hei);
+			if (vertex2outgoing_boundary_hei[originating_vertex].size() > 1)
+			{
+				cerr << "Non-orientable surface.\n";
+			}
+		}
+
+		// For each boundary halfedge, make its next_he one of the boundary
+		// halfedges originating at its to_vertex.
+		for (vector< index_t >::const_iterator hei = boundary_heis.begin(); \
+			hei != boundary_heis.end(); hei++)
+		{
+			halfedge_t& he = m_halfedges[*hei];
+
+			set< index_t >& outgoing = \
+				vertex2outgoing_boundary_hei[he.to_vertex];
+			if (!outgoing.empty())
+			{
+				set< index_t >::iterator outgoing_hei = outgoing.begin();
+				he.next_he = *outgoing_hei;
+
+				outgoing.erase(outgoing_hei);
+			}
+		}
+	}
+
+	void faces_to_edges(vector<face* > *faces, vector<edge_t> &edges_out) {
+		typedef set<pair<index_t, index_t>> edge_set_t;
+		edge_set_t edges;
+		for (size_t i = 0; i < faces->size(); i++)
+		{
+			face * curr = (*faces)[i];
+			edges.insert(make_pair(min(curr->ind1, curr->ind2), max(curr->ind1, curr->ind2)));
+			edges.insert(make_pair(min(curr->ind2, curr->ind3), max(curr->ind2, curr->ind3)));
+			edges.insert(make_pair(min(curr->ind3, curr->ind1), max(curr->ind3, curr->ind1)));
+		}
+		edges_out.resize(edges.size());
+		int e = 0;
+		for (edge_set_t::const_iterator it = edges.begin(); it != edges.end(); it++, e++) {
+			edges_out.at(e).start() = it->first;
+			edges_out.at(e).end() = it->second;
 		}
 	}
 }

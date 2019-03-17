@@ -22,8 +22,8 @@ typedef struct face {
 // are put into faces
 
 typedef struct Mesh {
-	vector<point *> *point;
-	vector<face *> *face;
+	vector<point *> *points;
+	vector<face *> *faces;
 }Mesh;
 
 namespace half_edge
