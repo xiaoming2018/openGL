@@ -113,6 +113,8 @@ void processInput(GLFWwindow *window) {
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+
+	// glViewport函数前两个参数控制窗口左下角的位置。第三个和第四个参数控制渲染窗口的宽度和高度（像素）。
 	glViewport(0, 0, width, height);
 }
 
